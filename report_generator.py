@@ -57,7 +57,9 @@ def generate_report(candidate_name: str,
     os.makedirs(REPORTS_DIR, exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     verdict = session_summary.get("verdict", "UNKNOWN")
-    pdf_path = f"{REPORTS_DIR}/audit_{ts}_{candidate_id}_{verdict}.pdf"
+    safe_id = candidate_id.replace(
+        "/", "-").replace("\\", "-").replace(" ", "_")
+    pdf_path = f"{REPORTS_DIR}/audit_{ts}_{safe_id}_{verdict}.pdf"
 
     doc = SimpleDocTemplate(
         pdf_path,
